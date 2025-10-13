@@ -12,3 +12,22 @@ class DanhSach(View):
         h = Hotel.objects.filter(Status=True)
         context={"hotel":h}
         return render(request,"hotel/danhsach.html",context)
+
+class SapXep(View):
+    def get(seft,request):
+        h = Hotel.objects.filter(Status=True)
+        context={"hotel":h}
+        return render(request,"hotel/sapxep.html",context)
+
+class SapXepTheoTen(View):
+    def get(seft,request):
+        h = Hotel.objects.filter(Status=True).order_by('HotelName')
+        context={"hotel":h}
+        return render(request,"hotel/sapxep.html",context)
+
+class SapXepTheoRating(View):
+    def get(seft,request):
+        h = Hotel.objects.filter(Status=True).order_by('-Rating')
+        context={"hotel":h}
+        return render(request,"hotel/sapxep.html",context)
+    

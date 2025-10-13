@@ -92,3 +92,16 @@ class ViTri(View):
         h = Hotel.objects.filter(Location=request.POST.get('city'),Status=True)
         context={"hotel":h,"vitri":v,"vitridachon":vc}
         return render(request,"hotel/vitri.html",context)
+
+class PhongTrong(View):
+    def get(seft,request):
+        h = Hotel.objects.filter(RoomAvilable__gt=0,Status=True)
+        context={"hotel":h}
+        return render(request,"hotel/phongtrong.html",context)
+
+class DatPhong(View):
+    def get(seft,request):
+        h = Hotel.objects.filter(Status=True)
+        u = User.objects.filter(Status=True)
+        context={"hotel":h,"user":u}
+        return render(request,"hotel/datphong.html",context)

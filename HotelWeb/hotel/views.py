@@ -50,3 +50,29 @@ class DeleteHotel(View):
         #h.Status=False
         h.save()
         return redirect('danhsach')
+
+class NewUser(View):
+    def get(self,request):
+        a=AddUser
+        return render(request,"hotel/newuser.html",{"f":a})
+
+    def post(self,request):
+        newuser=AddUser(request.POST)
+        if newuser.is_valid():
+            h=Hotel.objects.get(HotelName=(newuser.cleaned_data["BookingRoom"]).HotelName)
+            h.RoomAvilable-=1
+            h.save()
+            newuser.save()
+            return redirect('datphong')
+        else:
+            return HttpResponse('ĐẶT PHÒNG THẤT BẠI')
+
+class DeleteUser(View):
+    def get(seft,request,user_id):
+        u = User.objects.get(pk=user_id)
+        u.Status=False
+        h=Hotel.objects.get(HotelName=u.BookingRoom)
+        h.RoomAvilable+=1
+        h.save()
+        u.save()
+        return redirect('datphong')

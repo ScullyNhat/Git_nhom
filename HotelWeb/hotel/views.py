@@ -31,3 +31,22 @@ class SapXepTheoRating(View):
         context={"hotel":h}
         return render(request,"hotel/sapxep.html",context)
     
+class NewHotel(View):
+    def get(self,request):
+        a=AddHotel
+        return render(request,"hotel/newhotel.html",{"f":a})
+
+    def post(self,request):
+        newhotel=AddHotel(request.POST)
+        if newhotel.is_valid():
+            newhotel.save()
+            return redirect('danhsach')
+        else:
+            return HttpResponse('THÊM KHÁCH SẠN THẤT BẠI')
+
+class DeleteHotel(View):
+    def get(seft,request,hotel_id):
+        h = Hotel.objects.get(pk=hotel_id)
+        #h.Status=False
+        h.save()
+        return redirect('danhsach')

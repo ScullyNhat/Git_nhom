@@ -76,3 +76,19 @@ class DeleteUser(View):
         h.save()
         u.save()
         return redirect('datphong')
+
+class ViTri(View):
+    def get(seft,request):
+        v=Hotel.objects.values('Location').filter(Status=True).distinct()
+        h = Hotel.objects.filter(Status=True)
+        context={"hotel":h,"vitri":v,"vitridachon":"Tất cả"}
+        return render(request,"hotel/vitri.html",context)
+    
+    def post(seft,request):
+        vc=request.POST.get('city')
+        v=Hotel.objects.values('Location').filter(Status=True).distinct()
+        if request.POST.get('city')=="Tất cả":
+            return redirect('vitri')
+        h = Hotel.objects.filter(Location=request.POST.get('city'),Status=True)
+        context={"hotel":h,"vitri":v,"vitridachon":vc}
+        return render(request,"hotel/vitri.html",context)
